@@ -1,4 +1,15 @@
 .app-title{
     text-align: center;
-    color: aqua;
+    color: rgb(246, 18, 94);
+    font-size: 50px;
+
+    
+}
+
+body{
+    background-color: rgb(134, 238, 238);
+}
+
+.contact-container{
+    text-align: center;
 }
