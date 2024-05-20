@@ -1,7 +1,9 @@
-import { SafeAreaView, StyleSheet, Text, View, Alert,Pressable,Image } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Alert,Pressable,Image,TextInput } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import * as Location from 'expo-location';
-import { MaterialIcons } from '@expo/vector-icons';  
+import { MaterialIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+import { SliderBox } from "react-native-image-slider-box";
 
 const HomeScreen = () => {
   const [displayCurrentAddress, setDisplayCurrentAddress] = useState('We are loading your location');
@@ -70,15 +72,17 @@ const HomeScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View>
-      <MaterialIcons name="location-on" size={24} color="#03AED2" />
+
+    
+    <SafeAreaView>
+      <View style={{ flexDirection: "row", alignItems: "center", padding: 10 }}>
+      <MaterialIcons name="location-on" size={30} color="#03AED2" />
         <View>
         <Text style={{ fontSize: 18, fontWeight: "600" }}>Home</Text>
         <Text > {displayCurrentAddress}</Text>
         </View>
 
-        <Pressable>
+        <Pressable style={{ marginLeft: "auto", marginRight: 7 }}>
             <Image
               style={{ width: 40, height: 40, borderRadius: 20 }}
               source={{
@@ -87,6 +91,24 @@ const HomeScreen = () => {
             />
           </Pressable>
       </View>
+
+      <View
+          style={{
+            padding: 10,
+            margin: 10,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            borderWidth: 0.8,
+            borderColor: "#C0C0C0",
+            borderRadius: 7,
+          }}
+        >
+          <TextInput placeholder="Search for items or More" />
+          <Feather name="search" size={24} color="black" />
+        </View>
+
+       
     </SafeAreaView>
   );
 };
