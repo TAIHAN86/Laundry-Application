@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import * as Location from 'expo-location';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
-import { SliderBox } from "react-native-image-slider-box";
+import Carousel from '../components/Carousel';
 
 const HomeScreen = () => {
   const [displayCurrentAddress, setDisplayCurrentAddress] = useState('We are loading your location');
@@ -109,6 +109,8 @@ const HomeScreen = () => {
         </View>
 
        
+
+       <Carousel/>
     </SafeAreaView>
   );
 };
