@@ -1,20 +1,20 @@
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './components/HomeScreen';  // Adjust the path as needed
-import DetailsScreen from './components/DetailsScreen';  // Create a DetailsScreen similarly
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, View } from 'react-native';
+import HomeScreen from './Screen/HomeScreen'; // Corrected import path
 
-const Stack = createStackNavigator();
 
-function App() {
+export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <View style={styles.container}>
+      <HomeScreen />
+      <StatusBar style="auto" />
+    </View>
   );
 }
 
-export default App;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});
