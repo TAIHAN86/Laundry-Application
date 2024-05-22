@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import * as Location from 'expo-location';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
-import Carousel from '../components/Carousel';
+import Services from './Services';
+
 
 const HomeScreen = () => {
   const [displayCurrentAddress, setDisplayCurrentAddress] = useState('We are loading your location');
@@ -75,7 +76,7 @@ const HomeScreen = () => {
 
     
     <SafeAreaView>
-      <View style={{ flexDirection: "row", alignItems: "center", padding: 10 }}>
+      <View style={{ flexDirection: "row", alignItems: "center", padding: 18 }}>
       <MaterialIcons name="location-on" size={30} color="#03AED2" />
         <View>
         <Text style={{ fontSize: 18, fontWeight: "600" }}>Home</Text>
@@ -110,7 +111,7 @@ const HomeScreen = () => {
 
        
 
-       <Carousel/>
+     <Services/>  
     </SafeAreaView>
   );
 };
