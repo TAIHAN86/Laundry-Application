@@ -5,6 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import Services from '../components/Services'; // Adjust the path according to your project structure
 import DressItem from '../components/DressItem';
+import Carousel from '../components/Carousel';
 
 const HomeScreen = () => {
   const [displayCurrentAddress, setDisplayCurrentAddress] = useState('We are loading your location');
@@ -157,6 +158,8 @@ const HomeScreen = () => {
         <TextInput placeholder="Search for items or More" />
         <Feather name="search" size={24} color="black" />
       </View>
+
+<Carousel/>
 
       <Services />
 
