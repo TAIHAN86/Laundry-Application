@@ -8,10 +8,14 @@ import DressItem from '../components/DressItem';
 import Carousel from '../components/Carousel';
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../ProductReducer";
+import { useNavigation } from "@react-navigation/native";
 
 const HomeScreen = () => {
 
   const cart = useSelector((state) => state.cart.cart);
+  //procced to pickup section
+  const total = cart.map((item) => item.quantity * item.price).reduce((curr,prev) => curr + prev,0);
+  const navigation = useNavigation();
   console.log(cart);
 
   // Location funtionality
@@ -147,6 +151,7 @@ const HomeScreen = () => {
   ];
 
   return (
+    <>
     //Location icon
     <ScrollView style={{ backgroundColor: "#F0F0F0", flex: 1, marginTop: 50 }}>
       <View style={{ flexDirection: "row", alignItems: "center", padding: 10 }}>
@@ -189,6 +194,36 @@ const HomeScreen = () => {
         <DressItem item={item} key={item.id} />
       ))}
     </ScrollView>
+
+
+
+    {total === 0 ? (
+            null
+          ) : (
+            <Pressable
+            style={{
+              backgroundColor: "#088F8F",
+              padding: 10,
+              marginBottom: 40,
+              margin: 15,
+              borderRadius: 7,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent:"space-between",
+            }}
+          >
+            <View>
+              <Text style={{fontSize:17,fontWeight:"600",color:"white"}}>{cart.length} items |  $ {total}</Text>
+              <Text style={{fontSize:15,fontWeight:"400",color:"white",marginVertical:6}}>extra charges might apply</Text>
+            </View>
+    
+            <Pressable onPress={() => navigation.navigate("PickUp")}>
+              <Text style={{fontSize:17,fontWeight:"600",color:"white"}}>Proceed to pickup</Text>
+            </Pressable>
+          </Pressable>
+          )}
+     
+    </>
   );
 };
 
