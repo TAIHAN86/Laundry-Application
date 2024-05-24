@@ -1,14 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import HomeScreen from './Screen/HomeScreen'; // Corrected import path
-
+import { Provider } from 'react-redux';
+import Store from './Store';
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <Provider store={Store}>
       <HomeScreen />
       <StatusBar style="auto" />
-    </View>
+    </Provider>
   );
 }
 
