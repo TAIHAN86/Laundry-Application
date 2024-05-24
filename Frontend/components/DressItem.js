@@ -13,7 +13,7 @@ const DressItem = ({ item }) => {
   const cart = useSelector((state) => state.cart.cart);
   const addItemToCart = () => {
     dispatch(addToCart(item)); // cart
-    dispatch(incrementQty(item)); // product
+    dispatch(incrementQty(item)); // product cart incre and decrememt using redux toolkit
   };
   return (
     <View>

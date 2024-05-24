@@ -14,7 +14,7 @@ const HomeScreen = () => {
   const cart = useSelector((state) => state.cart.cart);
   console.log(cart);
 
-  
+  // Location funtionality
   const [displayCurrentAddress, setDisplayCurrentAddress] = useState('We are loading your location');
   const [locationServicesEnabled, setLocationServicesEnabled] = useState(false);
 
@@ -80,7 +80,7 @@ const HomeScreen = () => {
     }
   };
 
-
+// product reducer funtion
   const product = useSelector((state) => state.product.product);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -93,7 +93,7 @@ const HomeScreen = () => {
   }, []);
   console.log(product);
 
-
+//cart data 
   const services = [
     {
       id: "0",
@@ -147,6 +147,7 @@ const HomeScreen = () => {
   ];
 
   return (
+    //Location icon
     <ScrollView style={{ backgroundColor: "#F0F0F0", flex: 1, marginTop: 50 }}>
       <View style={{ flexDirection: "row", alignItems: "center", padding: 10 }}>
         <MaterialIcons name="location-on" size={30} color="#03AED2" />
