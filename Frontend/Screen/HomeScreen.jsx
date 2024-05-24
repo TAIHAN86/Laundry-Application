@@ -6,7 +6,8 @@ import { Feather } from '@expo/vector-icons';
 import Services from '../components/Services'; // Adjust the path according to your project structure
 import DressItem from '../components/DressItem';
 import Carousel from '../components/Carousel';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../ProductReducer";
 
 const HomeScreen = () => {
 
@@ -78,6 +79,20 @@ const HomeScreen = () => {
       }
     }
   };
+
+
+  const product = useSelector((state) => state.product.product);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (product.length > 0) return;
+
+    const fetchProducts =  () => {
+      services.map((service) => dispatch(getProducts(service)))
+    };
+    fetchProducts();
+  }, []);
+  console.log(product);
+
 
   const services = [
     {
@@ -169,7 +184,7 @@ const HomeScreen = () => {
 
       <Services />
 
-      {services.map((item, index) => (
+      {product.map((item, index) => (
         <DressItem item={item} key={item.id} />
       ))}
     </ScrollView>
