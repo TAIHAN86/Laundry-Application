@@ -3,6 +3,7 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import HomeScreen from './Screen/HomeScreen'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import PickUpScreen from './Screen/PickUpScreen';
 
 
 const StackNavigator = () => {
@@ -11,6 +12,8 @@ const StackNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} options={{headerShown:false}}/>
+        <Stack.Screen name="PickUp" component={PickUpScreen} options={{headerShown:false}}/>
+
       </Stack.Navigator>
     </NavigationContainer>
   )
