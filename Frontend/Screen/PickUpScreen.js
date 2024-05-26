@@ -23,9 +23,9 @@ const PickUpScreen = () => {
       </Text>
       <HorizontalDatepicker
         mode="gregorian"
-        startDate={new Date("2023-02-21")}
-        endDate={new Date("2023-02-28")}
-        initialSelectedDate={new Date("2023-02-21")}
+        startDate={new Date("2024-04-21")}
+        endDate={new Date("2024-04-28")}
+        initialSelectedDate={new Date("2024-04-21")}
         onSelectedDateChange={(date) => setSelectedDate(date)}
         selectedItemWidth={170}
         unselectedItemWidth={38}
