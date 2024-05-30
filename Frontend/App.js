@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import Store from './Store';
 import StackNavigator from './StackNavigator';
 
+
 export default function App() {
   return (
     <Provider store={Store}>

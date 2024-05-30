@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../ProductReducer";
 import { useNavigation } from "@react-navigation/native";
 
+
 const HomeScreen = () => {
   const cart = useSelector((state) => state.cart.cart);
   const total = cart.reduce((curr, item) => curr + item.quantity * item.price, 0);
@@ -209,6 +210,7 @@ const HomeScreen = () => {
 
           <Pressable onPress={() => navigation.navigate("PickUp")}>
             <Text style={{ fontSize: 17, fontWeight: "600", color: "white" }}>Proceed to pickup</Text>
+            
           </Pressable>
         </Pressable>
       )}

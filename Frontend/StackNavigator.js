@@ -7,6 +7,7 @@ import PickUpScreen from './Screen/PickUpScreen';
 import CartScreen from './Screen/CartScreen';
 
 
+
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
   return (
