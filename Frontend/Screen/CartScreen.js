@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, ScrollView, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  ScrollView,
+  Pressable,
+} from "react-native";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
@@ -9,31 +16,32 @@ import {
   incrementQuantity,
 } from "../CartReducer";
 import { decrementQty, incrementQty } from "../ProductReducer";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../firebase";
+
 const CartScreen = () => {
   const cart = useSelector((state) => state.cart.cart);
   const route = useRoute();
   const total = cart
     .map((item) => item.quantity * item.price)
     .reduce((curr, prev) => curr + prev, 0);
-    const navigation = useNavigation();
-    const dispatch = useDispatch();
-    const placeOrder = async () => {
-      navigation.navigate("Order");
-      dispatch(cleanCart());
-      await setDoc(
-        doc(db, "users", `${userUid}`),
-        {
-          orders: { ...cart },
-          pickUpDetails: route.params,
-        },
-        {
-          merge: true,
-        }
-      );
-    };
-
-
-
+  const navigation = useNavigation();
+  const userUid = auth.currentUser.uid;
+  const dispatch = useDispatch();
+  const placeOrder = async () => {
+    navigation.navigate("Order");
+    dispatch(cleanCart());
+    await setDoc(
+      doc(db, "users", `${userUid}`),
+      {
+        orders: { ...cart },
+        pickUpDetails: route.params,
+      },
+      {
+        merge: true,
+      }
+    );
+  };
   return (
     <>
       <ScrollView style={{ marginTop: 50 }}>
@@ -176,7 +184,7 @@ const CartScreen = () => {
                     Item Total
                   </Text>
                   <Text style={{ fontSize: 18, fontWeight: "400" }}>
-                    ${total}
+                    ₹{total}
                   </Text>
                 </View>
 
@@ -311,10 +319,10 @@ const CartScreen = () => {
                   }}
                 >
                   <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-                    To Pay ₹
+                    To Pay
                   </Text>
                   <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-                    {total + 83.28}
+                    {total + 83}
                   </Text>
                 </View>
               </View>

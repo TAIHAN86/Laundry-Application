@@ -8,21 +8,49 @@ import Carousel from '../components/Carousel';
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../ProductReducer";
 import { useNavigation } from "@react-navigation/native";
+import { collection, getDoc, getDocs } from "firebase/firestore";
 
+import { db } from "../firebase";
 
 const HomeScreen = () => {
   const cart = useSelector((state) => state.cart.cart);
   const total = cart.reduce((curr, item) => curr + item.quantity * item.price, 0);
   const navigation = useNavigation();
+  const [items, setItems] = useState([]);
   console.log(cart);
 
   const [displayCurrentAddress, setDisplayCurrentAddress] = useState('We are loading your location');
   const [locationServicesEnabled, setLocationServicesEnabled] = useState(false);
 
+  const dispatch = useDispatch();
+  const product = useSelector((state) => state.product.product);
+
   useEffect(() => {
     checkIfLocationEnabled();
     getCurrentLocation();
   }, []);
+
+  useEffect(() => {
+    if (product.length > 0) return;
+
+    const fetchProducts = async () => {
+      const colRef = collection(db, "types");
+      const docsSnap = await getDocs(colRef);
+      const fetchedItems = [];
+      docsSnap.forEach((doc) => {
+        fetchedItems.push(doc.data());
+      });
+      setItems(fetchedItems);
+    };
+
+    fetchProducts();
+  }, [product.length]);
+
+  useEffect(() => {
+    if (items.length > 0) {
+      items.forEach((service) => dispatch(getProducts(service)));
+    }
+  }, [items, dispatch]);
 
   const checkIfLocationEnabled = async () => {
     const enabled = await Location.hasServicesEnabledAsync();
@@ -77,19 +105,6 @@ const HomeScreen = () => {
     }
   };
 
-  const product = useSelector((state) => state.product.product);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (product.length > 0) return;
-
-    const fetchProducts = () => {
-      services.forEach((service) => dispatch(getProducts(service)));
-    };
-    fetchProducts();
-  }, [product.length, dispatch]);
-
-  console.log(product);
-
   const services = [
     {
       id: "0",
@@ -141,7 +156,6 @@ const HomeScreen = () => {
       price: 10,
     },
   ];
-
   return (
     <>
       <ScrollView style={{ backgroundColor: "#F0F0F0", flex: 1, marginTop: 50 }}>

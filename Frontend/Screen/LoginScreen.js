@@ -6,16 +6,42 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Pressable,
+  ActivityIndicator
 } from "react-native";
-import React, { useState } from "react";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import React, { useEffect, useState } from "react";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-
-
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
+  const [loading,setLoading] = useState(false);
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
+
+  useEffect(() => {
+    setLoading(true);
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if(!authUser){
+        setLoading(false);
+      }
+      if(authUser){
+        navigation.replace("Home");
+      }
+    });
+
+    return unsubscribe;
+  },[])
+  
+  const login = () => {
+    signInWithEmailAndPassword(auth,email,password).then((userCredential) => {
+      console.log("user credential",userCredential);
+      const user = userCredential.user;
+      console.log("user details",user)
+    })
+  }
+
   return (
     <SafeAreaView
       style={{
@@ -25,7 +51,13 @@ const LoginScreen = () => {
         padding: 10,
       }}
     >
-      <KeyboardAvoidingView>
+      {loading ? (
+        <View style={{alignItems:"center",justifyContent:"center",flexDirection:"row",flex:1}}>
+          <Text style={{marginRight:10}}>Loading</Text>
+          <ActivityIndicator size="large" color={"red"}/>
+        </View>
+      ) : (
+        <KeyboardAvoidingView>
         <View
           style={{
             justifyContent: "center",
@@ -44,14 +76,18 @@ const LoginScreen = () => {
 
         <View style={{ marginTop: 50 }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <MaterialCommunityIcons name="email-outline" size={24} color="black" />
+            <MaterialCommunityIcons
+              name="email-outline"
+              size={24}
+              color="black"
+            />
             <TextInput
               placeholder="Email"
               value={email}
               onChangeText={(text) => setEmail(text)}
               placeholderTextColor="black"
               style={{
-                fontSize: 18,
+                fontSize: email ? 18 : 18,
                 borderBottomWidth: 1,
                 borderBottomColor: "gray",
                 marginLeft: 13,
@@ -70,7 +106,7 @@ const LoginScreen = () => {
               placeholder="Password"
               placeholderTextColor="black"
               style={{
-                fontSize: 18,
+                fontSize: password ? 18 : 18,
                 borderBottomWidth: 1,
                 borderBottomColor: "gray",
                 marginLeft: 13,
@@ -81,6 +117,7 @@ const LoginScreen = () => {
           </View>
 
           <Pressable
+          onPress={login}
             style={{
               width: 200,
               backgroundColor: "#318CE7",
@@ -103,14 +140,14 @@ const LoginScreen = () => {
                 fontSize: 17,
                 color: "gray",
                 fontWeight: "500",
-                marginTop: 20,
               }}
             >
-              Don't have an account? Sign Up
+              Don't have a account? Sign Up
             </Text>
           </Pressable>
         </View>
       </KeyboardAvoidingView>
+      )}
     </SafeAreaView>
   );
 };
